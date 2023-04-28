@@ -2,13 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const users = require("./models/user");
 const bcrypt = require("bcrypt");
+require('dotenv').config();
 const app = express();
 const port = 3000;
 app.use(express.json());
 
 mongoose
   .connect(
-    "mongodb+srv://tanishkakkothari:QikGIKiyxHjt3IXS@cluster0.zd2ukni.mongodb.net/Project1?retryWrites=true&w=majority"
+    process.env.URL
   )
   .then(() => {
     console.log("connect: success");
@@ -56,14 +57,6 @@ app.post("/signup", (req, res) => {
       res.send({ message: "signup failed : user already exists . please login.", data: [], success: false });
     }
   });
-});
-
-app.get("/login", (req, res) => {
-  res.send({ message: "login", data: [], success: true });
-});
-
-app.get("/signup", (req, res) => {
-  res.send({ message: "signup", data: [], success: true });
 });
 
 app.get("/", (req, res) => {
