@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const users = require("../models/user");
+const sendEmail = require("../utils/mailer")
 
 const login =  async (req, res) => {
     try {
@@ -64,27 +65,20 @@ const signup =  (req, res) => {
       try {
         const doc = await userDoc.save({});
         let token;
-        try {
           token = jwt.sign(
             { name: req.body["name"], email: req.body["email"] },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
           );
+          sendEmail(req.body["email"], req.body["name"]) 
           res.send({
             message: "signup",
             data: [{ token: token }],
             success: true,
           });
-        } catch (err) {
-          res.send({
-            message: "signup failed ." + err,
-            data: [],
-            success: false,
-          });
-        }
       } catch (err) {
         res.send({
-          message: "signup failed : user already exists . please login." + err,
+          message: "signup failed : please login. " + err,
           data: [],
           success: false,
         });
