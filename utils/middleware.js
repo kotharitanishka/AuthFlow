@@ -17,7 +17,6 @@ const jwt_middleware = function (req, res, next) {
         .status(403)
         .send({ message: "wrong token." + err, data: [], success: false });
     }
-    next();
   };
 
   module.exports = jwt_middleware;
