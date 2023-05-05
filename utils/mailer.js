@@ -19,6 +19,13 @@ var data = {
     "text" : "thank you "
 }
 
+var otpdata = {
+    "from" : process.env.ADMIN_EMAIL,
+    "to" : process.env.ADMIN_EMAIL,
+    "subject" : "otp for forgot password",
+    "text" : "this is your otp  : "
+}
+
 const sendEmail = (toEmail, toName) => {
     const transporter = nodemailer.createTransport(config);
     data["to"] = toEmail
@@ -34,4 +41,19 @@ const sendEmail = (toEmail, toName) => {
     });
 };
 
-module.exports = sendEmail;
+const sendOtpMail = (toEmail, otp) => {
+    const transporter = nodemailer.createTransport(config);
+    otpdata["to"] = toEmail
+    otpdata['text'] = otpdata["text"] + " "  + otp 
+
+    transporter.sendMail(otpdata, (err, info) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(info.response)
+            return info.response;
+        }
+    });
+};
+
+module.exports = {sendEmail , sendOtpMail};

@@ -2,11 +2,15 @@ const mongoose = require("mongoose");
 const validateEmail = require("../utils/common")
 var Schema = mongoose.Schema;
 
-const users = mongoose.model(
-  "User",
+const otp = mongoose.model(
+  "otp_collection",
   new Schema({
-    name: String,
-    password: String,
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: '2m' },
+      },
+    otp : Number,
     email: {
       type: String,
       required: [true, "Please enter your email"],
@@ -16,4 +20,4 @@ const users = mongoose.model(
   })
 );
 
-module.exports = users;
+module.exports = otp;
