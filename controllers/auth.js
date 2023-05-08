@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const users = require("../models/user");
 const otp_gen = require("../models/otp");
-const sendEmail = require("../utils/mailer");
+const {sendEmail} = require("../utils/mailer");
 const otpGenerator = require("otp-generator");
 
 const login = async (req, res) => {

@@ -1,22 +1,24 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const ejs = require('ejs');
+var path = require('path');
 
 const config = {
-    service : "gmail",
-    host : "smtp.gmail.com",
-    port : 587,
-    secure : false,
-    auth : {
-        user : process.env.ADMIN_EMAIL,
-        pass : process.env.ADMIN_PASS
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.ADMIN_EMAIL,
+        pass: process.env.ADMIN_PASS
     },
 };
 
-var emailData = {
-    "from" : process.env.ADMIN_EMAIL,
-    "to" : process.env.ADMIN_EMAIL,
-    "subject" : "welcome to xyz",
-    "text" : "thank you "
+var mailOptions = {
+    "from": process.env.ADMIN_EMAIL,
+    "to": process.env.ADMIN_EMAIL,
+    "subject": "welcome to xyz",
+    "text": "thank you ",
 }
 
 var otpData = {
@@ -27,18 +29,26 @@ var otpData = {
 }
 
 const sendEmail = (toEmail, toName) => {
-    const transporter = nodemailer.createTransport(config);
-    emailData["to"] = toEmail
-    emailData['text'] = emailData['text'] + toName + " for signing up with us"
-
-    transporter.sendMail(emailData, (err, info) => {
+    ejs.renderFile(path.join(__dirname, '..', 'templates', 'welcome.ejs'), { toEmail, toName }, (err, data) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(info.response)
-            return info.response;
+            const transporter = nodemailer.createTransport(config);
+
+            mailOptions["to"] = toEmail
+            mailOptions['html'] = data
+
+            transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(info.response)
+                    return info.response;
+                }
+            });
         }
     });
+
 };
 
 const sendOtpMail = (toEmail, otp) => {
@@ -56,4 +66,4 @@ const sendOtpMail = (toEmail, otp) => {
     });
 };
 
-module.exports = {sendEmail , sendOtpMail};
+module.exports = { sendEmail, sendOtpMail };
