@@ -12,14 +12,14 @@ const config = {
     },
 };
 
-var data = {
+var emailData = {
     "from" : process.env.ADMIN_EMAIL,
     "to" : process.env.ADMIN_EMAIL,
     "subject" : "welcome to xyz",
     "text" : "thank you "
 }
 
-var otpdata = {
+var otpData = {
     "from" : process.env.ADMIN_EMAIL,
     "to" : process.env.ADMIN_EMAIL,
     "subject" : "otp for forgot password",
@@ -28,10 +28,10 @@ var otpdata = {
 
 const sendEmail = (toEmail, toName) => {
     const transporter = nodemailer.createTransport(config);
-    data["to"] = toEmail
-    data['text'] = data['text'] + toName + " for signing up with us"
+    emailData["to"] = toEmail
+    emailData['text'] = emailData['text'] + toName + " for signing up with us"
 
-    transporter.sendMail(data, (err, info) => {
+    transporter.sendMail(emailData, (err, info) => {
         if (err) {
             console.log(err);
         } else {
@@ -43,10 +43,10 @@ const sendEmail = (toEmail, toName) => {
 
 const sendOtpMail = (toEmail, otp) => {
     const transporter = nodemailer.createTransport(config);
-    otpdata["to"] = toEmail
-    otpdata['text'] = otpdata["text"] + " "  + otp 
+    otpData["to"] = toEmail
+    otpData['text'] = otpData["text"] + " "  + otp 
 
-    transporter.sendMail(otpdata, (err, info) => {
+    transporter.sendMail(otpData, (err, info) => {
         if (err) {
             console.log(err);
         } else {
