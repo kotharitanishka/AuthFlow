@@ -21,11 +21,11 @@ var mailOptions = {
     "text": "thank you ",
 }
 
-var otpdata = {
-    "from": process.env.ADMIN_EMAIL,
-    "to": process.env.ADMIN_EMAIL,
-    "subject": "otp for forgot password",
-    "text": "this is your otp  : "
+var otpData = {
+    "from" : process.env.ADMIN_EMAIL,
+    "to" : process.env.ADMIN_EMAIL,
+    "subject" : "otp for forgot password",
+    "text" : "this is your otp  : "
 }
 
 const sendEmail = (toEmail, toName) => {
@@ -53,10 +53,10 @@ const sendEmail = (toEmail, toName) => {
 
 const sendOtpMail = (toEmail, otp) => {
     const transporter = nodemailer.createTransport(config);
-    otpdata["to"] = toEmail
-    otpdata['text'] = otpdata["text"] + " " + otp
+    otpData["to"] = toEmail
+    otpData['text'] = otpData["text"] + " "  + otp 
 
-    transporter.sendMail(otpdata, (err, info) => {
+    transporter.sendMail(otpData, (err, info) => {
         if (err) {
             console.log(err);
         } else {
