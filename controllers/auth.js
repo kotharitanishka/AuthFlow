@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const users = require("../models/user");
 const otp_gen = require("../models/otp");
-const {sendEmail} = require("../utils/mailer");
+const  { sendEmail, sendOtpMail } = require("../utils/mailer");
 const otpGenerator = require("otp-generator");
 
 const login = async (req, res) => {
@@ -144,7 +144,7 @@ const forgotPass = async (req, res) => {
         }),
       });
       await otp_doc.save({});
-      sendEmail.sendOtpMail(otp_doc["email"], otp_doc["otp"]);
+      sendOtpMail(otp_doc["email"], otp_doc["otp"]);
       res.send({
         message: "mail sent . please check for otp",
         data: [],

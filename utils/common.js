@@ -3,4 +3,6 @@ const validateEmail = function(email) {
     return regex.test(email);
   };
 
+
+  
 module.exports = validateEmail;

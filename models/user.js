@@ -5,8 +5,14 @@ var Schema = mongoose.Schema;
 const users = mongoose.model(
   "User",
   new Schema({
-    name: String,
-    password: String,
+    name: {
+      type: String,
+      required: [true, "Please enter your name"],
+    },
+    password: {
+      type: String,
+      required: [true, "Please enter your password"],
+    },
     email: {
       type: String,
       required: [true, "Please enter your email"],
