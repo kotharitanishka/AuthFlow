@@ -53,10 +53,6 @@ To integrate the generic authentication flow with OTP verification into your pro
 
 Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, please feel free to submit a pull request or open an issue on the GitHub repository.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgements
 
 - [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for Node.js
